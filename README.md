@@ -23,3 +23,7 @@ Name this instance "Minecraft Server"
 6. In Network settings, change the vpc to default
 7. click the edit button and change the security group name to **Minecraft Security Group**
 8. 
+
+Things I didn't know:
+1. Installing JDK Java on EC2 Instance:
+Solution: https://stackoverflow.com/questions/59430965/aws-how-to-install-java11-on-an-ec2-linux-machine
