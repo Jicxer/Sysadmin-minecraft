@@ -10,6 +10,10 @@ We are given broad guidelines:
 - Setup auto-start for the Minecraft service when the instance starts (hint: systemctl or similar)
 - Connect to your instance's public IP address (i.e., your Minecraft server address) with the Minecraft client to see if it works
 
+### Requirements:
+- AWS Account
+- Minecraft Account (Java Edition)
+
 ## Tutorial
 1. From your AWS 'Console Home,' use the search bar to navigate to EC2.
 The dashboard will look like this:
@@ -17,20 +21,44 @@ The dashboard will look like this:
 
 2. From the EC2 dashboard, navigate to "instances" and launch a new instance
 Name this instance "Minecraft Server"
-3. In the Application and OS Images section, pick the **Debian** machine image with **64-bit (Arm)** architecture
+3. In the Application and OS Images section, pick tis set up machine image with **64-bit (Arm)** architecture
 4. Select **t4g.small** for Instance Type
+
+Note: Choose the storage size according to how many players you intend to house on your server.
 ![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/254a94fc-95e1-4455-8526-1c5b3c2064e5)
-6. In Network settings, change the vpc to default
-7. click the edit button and change the security group name to **Minecraft Security Group**
-8. 
+5. Generate a new key pair by clicking on the **Create new key pair**
 
-Things I didn't know:
-1. Installing JDK Java on EC2 Instance:
-2. 
-Solution: https://stackoverflow.com/questions/59430965/aws-how-to-install-java11-on-an-ec2-linux-machine
-https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/generic-linux-install.html
+Name the key-name to something such as "minecraft-key" and click **Create key pair**
 
-```#!/bin/bash
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/1e788000-9946-4c86-a6f9-a9a1d355d3a7)
+
+Generating a new key will download the private key onto your local machine. **(DO NOT SHARE THIS)**
+
+This key will be used to access this EC2 instance, such as SSH.
+6. Click the **Edit** button in Network settings at the top right corner and change the vpc setting to **default**.
+
+Leave the subnet setting as is and have the Auto-assign public IP to **Enable**.
+
+Create a new security group called **Minecraft Security Group** and create a fitting description.
+
+Edit the _Inbound Security Group Rules_:
+
+  **Type**: Custom TCP
+  
+  **Port Range**: 25565
+  
+  **Source Type**: Anywhere
+
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/14af6f82-f02c-4464-bb9a-dc308cd5bb64)
+
+7. The Configure Storage section in EC2 setup is set to a default size of 8GB for roto volume EBS. This would be the amount of storage instance has, but feel free to
+add more storage as necessary.
+8. Skip to the Advanced Details section and navigate to User Data.
+The user data section allows you to add a bash script to download automatically. We will need this to start the Minecraft server automatically on EC2's start-up.
+The script below is intended to install the required dependencies, such as Docker and the Minecraft docker image used to start the Minecraft server.
+Copy and paste the contents onto the user-data field and **launch the instance**.
+```
+#!/bin/bash
 
 # Log output for debugging
 exec > /var/log/user-data.log 2>&1
@@ -107,3 +135,47 @@ echo 'Starting Minecraft server!'
 
 docker compose up -d
 ```
+
+## Elastic IP
+The Minecraft server needs a dedicated public IP for users to connect to and associate the EC2 instance.
+1. Using the search bar or under the Network & Security section on the left-hand side of EC2 Dashboard, navigate to the "Elastic IPs" section.
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/396d276d-6987-4b95-aed1-ff4158dc6f4c)
+2. Click **Allocate Elastic IP addresses**
+Select your corresponding AWS region under **Network border group** and select "Amazon's pool of IPv4 Addresses," and go ahead and allocate the IP address.
+3. Select the newly created Public IP address and navigate to the actions bar and select **Associate Elastic IP addresses**
+4. Leave the resource type section as is and under the **Instance** section, select the previously created Minecraft-server EC2 instance.
+5. Click **Associate**
+
+Your EC2 Instance now has a dedicated IP address! You and other players can use this public IP to connect to your Minecraft Server.
+Let's test this out using Minecraft Java Edition
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/9951df5a-bd83-4627-a70d-451b182e8d62)
+
+Use Direct Connect to input the generated IP address within the Multiplayer tab. In this instance, my Public IPv4 elastic IP address is _54.184.105.214_
+
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/97ee43fe-4ba4-464b-9cfa-09bd0ea383d3)
+
+**Congratulations!** You have now created your own dedicated Minecraft server using AWS!
+Be sure to tell your friends!
+**![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/e3f32a15-8a02-426d-ad6f-4b2cbe30cab1)
+
+## Conclusion
+This tutorial covers how to set up a dedicated Java Minecraft server using AWS. This server deployment only contains the vanilla edition; I will cover how to install a modded server in a later tutorial.
+That being said, there were a few instances where I was lost and decided to use my resources to find the answers.
+A few of the things I was unsure of and decided to look up were:
+
+1. **Installing Docker Engine on Debian**
+
+   Installing docker would be essential as this tutorial uses a docker Minecraft image to run the server. The EC2 instance that was created has a Debian OS image with an arm architecture.
+   The answer to installing the docker engine for Debian lies in the [documentation](https://docs.docker.com/engine/install/debian/#install-using-the-repository).
+   The gnome-terminal was also needed to install [Docker Desktop](https://docs.docker.com/desktop/install/debian/) on Debian.
+2. **Running Docker Compose at system start-up**
+
+  Running Docker Compose at system start-up is important to have the Minecraft Server to start each time we start the AWS EC2 instance. The answer was to enable docker.service on system start-up using the command
+  ```sudo systemctl enable docker```
+  Additionally, when creating the initial docker-compose.yml file, the field "restart" should have the value "always" to ensure that the services always start on system start up.
+  The reference to this answer is from [StackOverflow](https://stackoverflow.com/questions/43671482/how-to-run-docker-compose-up-d-at-system-start-up)
+
+3. **Difference between Minecraft Bedrock Edition and Java Edition**
+
+  It is important to distinguish between Bedrock and Java. The most notable difference is the ability to cross-play. Java edition is available on platforms such as Windows, Mac, and Linux, while Bedrock is available on devices such as consoles and mobile devices. Hosting a Java edition server means that only PC users can connect to the world, as opposed to having a Bedrock server. The resouce I used to find this answer was in [Microsoft's official website.](https://learn.microsoft.com/en-us/minecraft/creator/documents/differencesbetweenbedrockandjava?view=minecraft-bedrock-stable)
+
