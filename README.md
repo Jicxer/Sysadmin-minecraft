@@ -26,4 +26,6 @@ Name this instance "Minecraft Server"
 
 Things I didn't know:
 1. Installing JDK Java on EC2 Instance:
+2. 
 Solution: https://stackoverflow.com/questions/59430965/aws-how-to-install-java11-on-an-ec2-linux-machine
+https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/generic-linux-install.html
