@@ -71,7 +71,7 @@ ssh -i "{generated key-pair}" admin@{EC2 Instance Public DNS}
 sudo apt-get update
 sudo apt-get install git -y
 git clone https://github.com/Jicxer/Sysadmin-minecraft.git
-cd Sysadmin-minecraft.git
+cd Sysadmin-minecraft
 sudo chmod +x setup.sh
 sudo ./setup.sh
 ```
