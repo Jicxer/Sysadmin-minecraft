@@ -60,8 +60,13 @@ Copy and paste the contents onto the user-data field and **launch the instance**
 ```
 #!/bin/bash
 
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "This script must be run as root. Use sudo to run it."
+  exit 1
+fi
+
 # Log output for debugging
-exec > /var/log/user-data.log 2>&1
 
 # Update the system
 apt-get update
@@ -84,7 +89,7 @@ if ! dpkg -l | grep -q docker-ce; then
   # Add the repository to Apt sources
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
     tee /etc/apt/sources.list.d/docker.list > /dev/null
   apt-get update
 
@@ -94,7 +99,9 @@ if ! dpkg -l | grep -q docker-ce; then
 else
   echo "Docker is already installed."
 fi
-sudo systemctl enable docker
+
+# Enable Docker to start on boot
+systemctl enable docker
 
 # Create the minecraft-server folder and create a yaml file called docker-compose.yml
 if [ ! -d "/minecraft-server" ]; then
@@ -134,6 +141,7 @@ fi
 echo 'Starting Minecraft server!'
 
 docker compose up -d
+
 ```
 
 ## Elastic IP
