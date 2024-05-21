@@ -1,5 +1,5 @@
-# Minecraft Server
 <a name="readme-top"></a>
+# Minecraft Server
 
 Final documentation for System Administration (CS312) final project at Oregon State University.
 
