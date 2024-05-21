@@ -212,3 +212,6 @@ A few of the things I was unsure of and decided to look up were:
 
   It is important to distinguish between Bedrock and Java. The most notable difference is the ability to cross-play. Java edition is available on platforms such as Windows, Mac, and Linux, while Bedrock is available on devices such as consoles and mobile devices. Hosting a Java edition server means that only PC users can connect to the world, as opposed to having a Bedrock server. The resouce I used to find this answer was in [Microsoft's official website.](https://learn.microsoft.com/en-us/minecraft/creator/documents/differencesbetweenbedrockandjava?view=minecraft-bedrock-stable)
 
+# What's Next?
+Another implementation for this tutorial is to include a modded version. We will make use of CurseForge and the same Docker minecraft image.
+The bash script would offer an option between two different installation set-ups for the server: vanilla or modded.
