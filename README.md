@@ -1,4 +1,6 @@
 # Minecraft Server
+<a name="readme-top"></a>
+
 Final documentation for System Administration (CS312) final project at Oregon State University.
 
 For our project, we were asked to deploy a Minecraft server on AWS as system admins for a fictional company. This would also require writing a tutorial in Markdown.
@@ -177,6 +179,8 @@ echo 'Starting Minecraft server!'
 docker compose up -d
 
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ### Elastic IP
 The Minecraft server needs a dedicated public IP for users to connect to and associate the EC2 instance.
@@ -199,6 +203,8 @@ Use Direct Connect to input the generated IP address within the Multiplayer tab.
 **Congratulations!** You have now created your own dedicated Minecraft server using AWS!
 Be sure to tell your friends!
 ![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/e3f32a15-8a02-426d-ad6f-4b2cbe30cab1)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Conclusion
 This tutorial covers how to set up a dedicated Java Minecraft server using AWS. This server deployment only contains the vanilla edition; I will cover how to install a modded server in a later tutorial.
@@ -224,3 +230,5 @@ A few of the things I was unsure of and decided to look up were:
 # What Next?
 Another implementation for this tutorial is to include a modded version. We will make use of CurseForge and the same Docker minecraft image.
 The bash script would offer an option between two different installation set-ups for the server: vanilla or modded.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
