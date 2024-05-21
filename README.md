@@ -10,6 +10,15 @@ We are given broad guidelines:
 - Setup auto-start for the Minecraft service when the instance starts (hint: systemctl or similar)
 - Connect to your instance's public IP address (i.e., your Minecraft server address) with the Minecraft client to see if it works
 
+  
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Tutorial](#Tutorial)
+- [Elastic IP](#elastic-ip)
+- [Conclusion](#conclusion)
+- [What Next](#what-next)
+
 ### Requirements:
 - AWS Account
 - Minecraft Account (Java Edition)
@@ -169,7 +178,7 @@ docker compose up -d
 
 ```
 
-## Elastic IP
+### Elastic IP
 The Minecraft server needs a dedicated public IP for users to connect to and associate the EC2 instance.
 1. Using the search bar or under the Network & Security section on the left-hand side of EC2 Dashboard, navigate to the "Elastic IPs" section.
 ![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/396d276d-6987-4b95-aed1-ff4158dc6f4c)
@@ -212,6 +221,6 @@ A few of the things I was unsure of and decided to look up were:
 
   It is important to distinguish between Bedrock and Java. The most notable difference is the ability to cross-play. Java edition is available on platforms such as Windows, Mac, and Linux, while Bedrock is available on devices such as consoles and mobile devices. Hosting a Java edition server means that only PC users can connect to the world, as opposed to having a Bedrock server. The resouce I used to find this answer was in [Microsoft's official website.](https://learn.microsoft.com/en-us/minecraft/creator/documents/differencesbetweenbedrockandjava?view=minecraft-bedrock-stable)
 
-# What's Next?
+# What Next?
 Another implementation for this tutorial is to include a modded version. We will make use of CurseForge and the same Docker minecraft image.
 The bash script would offer an option between two different installation set-ups for the server: vanilla or modded.
