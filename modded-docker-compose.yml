@@ -3,14 +3,13 @@ version: "3.8"
 services:
   mc:
     container_name: modded-server
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:java8
     ports:
       - 25565:25565
     environment:
       EULA: "TRUE"
       TYPE: "AUTO_CURSEFORGE"
       VERSION: 1.19.4
-      REMOVE_OLD_MODS: "true"
       CF_PAGE_URL: "https://www.curseforge.com/minecraft/modpacks/skyfactory-4/download/3565683"
     tty: true
     stdin_open: true
