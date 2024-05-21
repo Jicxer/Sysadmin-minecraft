@@ -34,7 +34,8 @@ Name the key-name to something such as "minecraft-key" and click **Create key pa
 
 Generating a new key will download the private key onto your local machine. **(DO NOT SHARE THIS)**
 
-This key will be used to access this EC2 instance, such as SSH.
+This key will access this EC2 instance, such as SSH.
+
 6. Click the **Edit** button in Network settings at the top right corner and change the vpc setting to **default**.
 
 Leave the subnet setting as is and have the Auto-assign public IP to **Enable**.
@@ -91,8 +92,6 @@ if [ "$EUID" -ne 0 ]; then
   echo "This script must be run as root. Use sudo to run it."
   exit 1
 fi
-
-# Log output for debugging
 
 # Update the system
 apt-get update
