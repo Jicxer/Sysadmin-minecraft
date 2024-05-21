@@ -76,6 +76,13 @@ sudo chmod +x setup.sh
 sudo ./setup.sh
 ```
 
+The setup script will take care of the installation of:
+- Gnome terminal
+- Docker & docker packages
+- Minecraft server docker image
+
+The script is provided below:
+
 ```
 #!/bin/bash
 
