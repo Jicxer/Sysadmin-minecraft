@@ -53,10 +53,29 @@ Edit the _Inbound Security Group Rules_:
 
 7. The Configure Storage section in EC2 setup is set to a default size of 8GB for roto volume EBS. This would be the amount of storage instance has, but feel free to
 add more storage as necessary.
-8. Skip to the Advanced Details section and navigate to User Data.
-The user data section allows you to add a bash script to download automatically. We will need this to start the Minecraft server automatically on EC2's start-up.
-The script below is intended to install the required dependencies, such as Docker and the Minecraft docker image used to start the Minecraft server.
-Copy and paste the contents onto the user-data field and **launch the instance**.
+8. Launch the instance
+9. From the EC2 dashboard, select the previously created instance and connect to the instance using SSH client.
+   
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/eba40776-f7f8-417e-acfb-1010e27fb1e4)
+
+Connecting to the instance using the SSH client makes use of the previously generated key pair at **step 5**.
+Using a platform such as Powershell, SSH into the instance by following the instructions.
+An example input would be:
+```
+ssh -i "{generated key-pair}" admin@{EC2 Instance Public DNS}
+```
+
+10. Once you've connected to the instance, enter these commands:
+
+```
+sudo apt-get update
+sudo apt-get install git -y
+git clone https://github.com/Jicxer/Sysadmin-minecraft.git
+cd Sysadmin-minecraft.git
+sudo chmod +x setup.sh
+sudo ./setup.sh
+```
+
 ```
 #!/bin/bash
 
