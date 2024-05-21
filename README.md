@@ -189,7 +189,7 @@ Use Direct Connect to input the generated IP address within the Multiplayer tab.
 
 **Congratulations!** You have now created your own dedicated Minecraft server using AWS!
 Be sure to tell your friends!
-**![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/e3f32a15-8a02-426d-ad6f-4b2cbe30cab1)
+![image](https://github.com/Jicxer/Sysadmin-minecraft/assets/79224427/e3f32a15-8a02-426d-ad6f-4b2cbe30cab1)
 
 ## Conclusion
 This tutorial covers how to set up a dedicated Java Minecraft server using AWS. This server deployment only contains the vanilla edition; I will cover how to install a modded server in a later tutorial.
